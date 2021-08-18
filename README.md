@@ -8,23 +8,23 @@
 
 # Opis projekta
 ## Kratki opis
-Ovdje ide opis projekta
+Mobilna aplikacija za pregled i pretraživanje poznatih turističkih destinacija (online turistički vodič za putovanja na svih 7 kontinenata).
 
 ## Popis funkcionalnosti
-1. a
-2. b
-3. c
+1. Prikaz kontinenata i gradova
+2. Filtriranje gradova prema određenim podacima ( službeni jezik, sigurnost, nightlife ... )
+3. Dodavanje destinacija u Favorite
+4. Pregledavanje Favorita
 
 
 ## UPUTE
 ## Opis projekta
-Potrebno je napisati kratki opis projekta.
-Opis mora sadržavati popis osnovnih funkcionalnosti koje će biti implementirane (npr. "pretraživanje recepata", "unos novih recepta", "pretraživanje recepata po sastojcima" itd...)
+Ideja aplikacije je pružiti informacije vezano za putovanja nekih popularnih destinacija. Kad se uključi aplikacija prikazat će nam se putovanja na određene kontinente. Klikom na jedan kontinent prikazat će se popularne destinacije na tim kontinentima (pr. Azija - klikom na nju prikazat će se destinacije : Bali, Tokyo ... ). Ako kliknemo na Bali trebali bi se prikazati detalji, opis, zanimljivosti...
+Dodat ćemo oznaku za favorite. Dodat ćemo bočni izbornik za filtriranje prema podacima za određne gradove. 
+
 
 ## Početna struktura aplikacije
-Potrebno je inicijalizirati početnu strukturu mobilne aplikacije.
-Pod strukturom se podrazumijeva da definirate koliko različitih ekrana će sadržavati vaša aplikacija i osmislite navigaciju između tih ekrana koristeći jedan (ili više) pristupa koje smo obradili u vježbama.
-
+Aplikacija sadržava 5 različitih ekrana između kojih je moguća navigacija implementirana koristeći navigator komponente StackNavigator, TabsNavigator i DrawerNavigator. 
 ## Prototip
 U ovoj fazi bi trebali imati "grubu" verziju svoje aplikacije. Ova verzija bi trebala imati implementirane osnovne funkcionalnosti koje su navedene u opisu projekta. Ne očekuje se da su implementirane SVE funkcionalnosti niti da su postojeće funkcionalnosti potpuno ispravne.
 

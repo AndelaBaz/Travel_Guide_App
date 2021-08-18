@@ -1,21 +1,36 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from "react";
+import { LogBox, StyleSheet, Text, View} from "react-native";
+import AppLoading from "expo-app-loading";
+import * as Font from "expo-font";
+
+import Navigacija from "./navigacija/Navigacija";
+
+	
+import { enableScreens } from "react-native-screens";
+
+LogBox.ignoreAllLogs(true);
+enableScreens();
+
+const ucitajFontove = () => {
+  return Font.loadAsync({
+    "quando": require("./assets/fonts/Quando-Regular.ttf")
+  });
+};
 
 export default function App() {
+  const [fontUcitan, postaviFontUcitan] = useState(false);
+  if (!fontUcitan) {
+    return (
+      <AppLoading
+        startAsync={ucitajFontove}
+        onFinish={() => postaviFontUcitan(true)}
+        onError={(err) => console.log(err)}
+      />
+    );
+  }
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+      <Navigacija />
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const stil = StyleSheet.create({});
