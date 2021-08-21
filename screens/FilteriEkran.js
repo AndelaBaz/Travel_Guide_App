@@ -1,7 +1,9 @@
 import React, { useState, useCallback, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { StyleSheet, Text, View, Switch, Platform } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import NavButton from "../components/NavButton"
+import { postaviFiltere } from "../store/actions/gradovi";
 
 const FilterSwitch = (props) => {
   return (
@@ -21,20 +23,23 @@ const Filteri = (props) => {
 
   const {navigation} = props; 
 
-  const [sluzbeniJezik, postaviJezik] = useState(false)
+  const [sluzbeniEng, postaviJezik] = useState(false)
   const [wifi, postaviWifi] = useState(false)
   const [sigurnost, postaviSigurnost] = useState(false)
   const [nightlife, postaviNightlife] = useState(false)
 
+  const dispatch = useDispatch()
+
   const spremiFiltere = useCallback(() => {
     const odabraniFilteri = {
-      sluzbeniJezik,
+      sluzbeniEng,
       wifi,
       sigurnost,
       nightlife,
     };
-    console.log(odabraniFilteri);
-  }, [sluzbeniJezik, wifi, sigurnost, nightlife ]);
+    //console.log(odabraniFilteri);
+    dispatch(postaviFiltere(odabraniFilteri))
+  }, [sluzbeniEng, wifi, sigurnost, nightlife ]);
   
   useEffect(() => {
     navigation.setParams({ spremi: spremiFiltere });
@@ -44,7 +49,7 @@ const Filteri = (props) => {
             <Text style={stil.naslov}>Dostpuni filteri</Text>
       <FilterSwitch
         naslov="Engleski jezik službeni"
-        stanje={sluzbeniJezik}
+        stanje={sluzbeniEng}
         promjena={(nova) => postaviJezik(nova)}
       />
       <FilterSwitch
@@ -68,6 +73,7 @@ const Filteri = (props) => {
 
 
 Filteri.navigationOptions = (navData) => {
+  const spremiFiltere = navData.navigation.getParam("spremi") 
     return {
       headerTitle: "Filteri",
       headerLeft: () => {
@@ -89,7 +95,10 @@ Filteri.navigationOptions = (navData) => {
             <Item
               title="Spremi"
               iconName="save"
-              onPress={navData.navigation.getParam("spremi")}
+              onPress={() => {
+                spremiFiltere();
+                navData.navigation.navigate('TabFavoriti')
+              }}
             />
           </HeaderButtons>
         );

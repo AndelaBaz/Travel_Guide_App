@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useEffect, useCallback} from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { StyleSheet, Text, View, Button, ScrollView, ImageBackground, Image } from "react-native";
 import NavButton from "../components/NavButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { DESTINACIJE } from "../data/test-podaci";
+import { promjenaFavorita } from "../store/actions/gradovi";
 
 
 const ElementListe = (props) => {
@@ -15,8 +16,28 @@ const ElementListe = (props) => {
 
 
 const DestinacijeDetalji = (props) => {
-    const idDestinacije = props.navigation.getParam('destinacijaId')
-    const odabrani = DESTINACIJE.find(d => d.id === idDestinacije)
+    const idDestinacije = props.navigation.getParam('destinacijaId');
+    const sveDestinacije = useSelector (store => store.gradovi.gradovi);
+    const statusFavorit = useSelector ( state => 
+      state.gradovi.favoritGradovi.some( d => d.id === idDestinacije)
+      )
+    const odabrani = sveDestinacije.find(d => d.id === idDestinacije);
+
+    const dispatch = useDispatch();
+    
+    const favHandler = useCallback( ()=> {
+      dispatch(promjenaFavorita(idDestinacije));
+    }, [dispatch, idDestinacije]);
+
+    useEffect( () => {
+      props.navigation.setParams({promFavorit: favHandler})
+    }, [favHandler]); 
+
+    useEffect( () => {
+      props.navigation.setParams({favStatus: statusFavorit})
+    }, [statusFavorit]);
+    
+
     return (
       <ScrollView style={{backgroundColor: 'white', flex: 1}}>
         <ImageBackground style={{width:'100%', height:370}}
@@ -43,18 +64,19 @@ const DestinacijeDetalji = (props) => {
 
 DestinacijeDetalji.navigationOptions = (navigationData) => {
     const idDestinacije = navigationData.navigation.getParam('destinacijaId')
-    const odabrani = DESTINACIJE.find(d => d.id === idDestinacije)
+    //const odabrani = DESTINACIJE.find(d => d.id === idDestinacije)
+    const naslov = navigationData.navigation.getParam('naziv')
+    const promFavorit = navigationData.navigation.getParam('promFavorit')
+    const favStatus = navigationData.navigation.getParam('favStatus')
     return {
-      headerTitle: odabrani.naziv,
+      headerTitle: naslov,
       headerRight: () => {
           return (
             <HeaderButtons HeaderButtonComponent={NavButton}>
             <Item
               title="Favorit"
-              iconName="heart"
-              onPress={() => {
-                console.log("Recept označen kao favorit");
-              }}
+              iconName={favStatus ? "heart" : "heart-outline"}
+              onPress={promFavorit}
             />
           </HeaderButtons>
           )

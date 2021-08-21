@@ -1,9 +1,13 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import PrikazDestinacija from "./PrikazDestinacija";
 import { StyleSheet, Text, View, FlatList } from "react-native";
+import gradoviReducer from "../store/reducers/gradovi";
 
 const ListaDestinacije = (props) => {
+  const fav = useSelector(state => state.gradovi.favoritGradovi)
   const prikaziDestinaciju = (destinacija) => {
+    const favStatus = fav.some(g => g.id === destinacija.item.id)
     return (
         <PrikazDestinacija 
         naziv={destinacija.item.naziv}
@@ -13,7 +17,9 @@ const ListaDestinacije = (props) => {
             props.navigation.navigate({
                 routeName: 'Detalji',
                 params: {
-                    destinacijaId: destinacija.item.id
+                    destinacijaId: destinacija.item.id,
+                    naziv: destinacija.item.naziv,
+                    favStatus: favStatus
                 }
             })
         }}/>
