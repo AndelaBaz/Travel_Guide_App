@@ -12,8 +12,6 @@ import gradoviReducer from "./store/reducers/gradovi";
 	
 import { enableScreens } from "react-native-screens";
 
-LogBox.ignoreAllLogs(true);
-enableScreens();
 
 const glavniReducer = combineReducers({
   gradovi: gradoviReducer,
